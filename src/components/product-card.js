@@ -1,16 +1,13 @@
 
-import {
-    Container,
-    Text,
-    Divider,
+import {    
+    Text,    
     Box,
     Image,
-    Button,
-    SimpleGrid,
+    Button,    
     Flex,
   } from "@chakra-ui/react";
 
-  import { FiShoppingCart, FiShoppingBag } from "react-icons/fi";
+  import { FiShoppingCart } from "react-icons/fi";
 
 const ProductCard = ({product}) => {
 
