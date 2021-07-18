@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import Butter from "buttercms"
+import {   
+  Container,
+  Divider,
+} from "@chakra-ui/react";
+import ViewCart from './components/view-cart';
+import Products from './components/products';
 
-function App() {
+const butter = Butter(process.env.REACT_APP_BUTTERCMS_API_KEY)
+
+const App=()=>{
+
+  const [products, setProducts] = useState([]);
+
+  const loadProducts = async ()=> {
+    const response = await butter.content.retrieve(["techtee"], {
+      order: "name",
+    });
+
+    const {data} = await response.data;
+    const allProducts = data.techtee;
+    setProducts(allProducts);
+  }
+
+  // useEffect to load the products
+  useEffect(() => {  
+    loadProducts();   
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxW="container.xl" h="100vh" >
+      <ViewCart />      
+      <Divider />
+      <Products products={products}/>      
+    </Container>
   );
 }
 
